@@ -30,3 +30,11 @@ def find_bad_triangles(triangles, points, new_point):
         if in_circumcircle(a,b,c,new_point):
             bad.append(tri)
     return bad
+def make_triangle(i1,i2,i3,points):
+    """ 
+    construct a Triangle from the three point indices, guaranteeing counterclockwise winding regardless of input order.
+    """
+    a,b,c = points[i1],points[i2],points[i3]
+    if orientation(a,b,c) == -1:
+        i2,i3=i3,i2
+    return Triangle(i1,i2,i3)
