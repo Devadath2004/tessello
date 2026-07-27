@@ -38,3 +38,16 @@ def make_triangle(i1,i2,i3,points):
     if orientation(a,b,c) == -1:
         i2,i3=i3,i2
     return Triangle(i1,i2,i3)
+def find_boundary_edges(bad_triangles):
+    """
+    given a list of bad triangle objects, return the edges that appear only once, these will be the boundary edges. 
+    The edges are returned as tuples of point indices
+    """
+    edge_count = {}
+    for tri in bad_triangles:
+        edges = [(tri.a,tri.b),(tri.a,tri.c),(tri.b,tri.c)]
+        for i,j in edges:
+            key = (min(i,j),max(i,j))
+            edge_count[key] = edge_count.get(key,0)+1
+    boundary =[edge for edge, count in edge_count.items() if count == 1]
+    return boundary
