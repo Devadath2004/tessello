@@ -51,3 +51,31 @@ def find_boundary_edges(bad_triangles):
             edge_count[key] = edge_count.get(key,0)+1
     boundary =[edge for edge, count in edge_count.items() if count == 1]
     return boundary
+def bowyer_watson(input_points):
+    points = list(input_points)
+    s1,s2,s3= super_triangle(points)
+    points.append(s1)
+    points.append(s2)
+    points.append(s3)
+    s1_idx,s2_idx,s3_idx = len(points) - 3, len(points) - 2,len(points) -1
+    triangles = [make_triangle(s1_idx,s2_idx,s3_idx,points)]
+    for point_idx in range(len(points)):
+        p = points[point_idx]
+        bad = find_bad_triangles(triangles,points,p)
+        for tri in bad:
+            triangles.remove(tri)
+        boundary = find_boundary_edges(bad)
+        for i,j in boundary:
+            new_tri = make_triangle(i,j,point_idx,points)
+            triangles.append(new_tri)
+    final=[]
+    for tri in triangles:
+        if s1_idx in (tri.a,tri.b,tri.c):
+            continue
+        if s2_idx in (tri.a,tri.b,tri.c):
+            continue
+        if s3_idx in (tri.a,tri.b,tri.c):
+            continue
+        final.append(tri)
+    return(points,final)
+    
