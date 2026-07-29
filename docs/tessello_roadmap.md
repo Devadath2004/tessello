@@ -1,4 +1,34 @@
-# tessello — daily session roadmap
+# tessello — project roadmap
+
+## Prime outcome
+A from-scratch 2D Delaunay mesh generator, targeting OpenFOAM's native
+`polyMesh` format, validated against the Schäfer-Turek cylinder-in-channel
+benchmark. Built to learn computational geometry from first principles,
+not to compete with existing tools.
+
+## The 6 phases
+1. **Unconstrained 2D Delaunay triangulation** — done: predicates,
+   Bowyer-Watson, basic plotting. *(Days 1-8 below)*
+2. **Constrained Delaunay** — force the triangulation to respect a real
+   domain boundary (channel walls, cylinder surface). *(Days 9-14 below)*
+3. **Quality refinement** (Ruppert's algorithm) — eliminate slivers,
+   guarantee solver-usable mesh quality. *Not yet broken into days.*
+4. **Boundary layer insertion** — CFD-specific near-wall mesh structure.
+   *Not yet broken into days.*
+5. **OpenFOAM `polyMesh` writer** — translate internal mesh representation
+   to OpenFOAM's file format. *Not yet broken into days.*
+6. **Validation** — Schäfer-Turek benchmark, checked against prior
+   hand-built Gmsh/OpenFOAM results. *Not yet broken into days.*
+
+Phases 3-6 are real, known destinations — but scoping them into single-day
+tasks now, before Phase 2 is even finished, would mean guessing rather
+than planning. Each phase gets broken into days only once the phase
+before it is actually done — same reasoning that kept this roadmap at
+Day 14 rather than inventing detail further out.
+
+---
+
+# Daily session roadmap
 
 Rule for every session: **one outcome, then stop.** If you finish early, commit
 and walk away rather than pulling in the next day's item — momentum across
@@ -10,24 +40,18 @@ Each day is scoped for 30-45 minutes. Some will finish in 15. That's fine.
 
 ---
 
-## Day 1 — Test bowyer_watson on a tiny case
+## Day 1 — Test bowyer_watson on a tiny case ✅ DONE
 **Outcome:** run `bowyer_watson()` on 4-5 hand-picked points, print the
 resulting triangle count, confirm it doesn't crash.
-**Stop when:** you get a printed result, crash or not. If it crashes, note
-the error in `docs/notes.md` and stop — debug fresh tomorrow, not tonight.
+**Result:** 5-point square + center case, 4 triangles — matches the
+`2n-h-2` formula (n=5, h=4) exactly. Confirmed correct, not just non-crashing.
 
-## Day 2 — Debug Day 1's crash (if any) / verify triangle count makes sense
-**Outcome:** either fix yesterday's bug, or (if it ran clean) manually
-sanity-check the output — does the triangle count look reasonable for the
-number of points? (Rough rule: for N points, expect roughly 2N-ish
-triangles once boundary effects settle.)
-**Stop when:** either the bug's fixed and committed, or the sanity check
-is done. Don't start plotting today even if there's time left.
+## Day 2 — Debug Day 1's crash (if any) / verify triangle count makes sense ✅ DONE
+**Outcome:** sanity-checked via the formula above — no crash, no bug found.
 
-## Day 3 — Write `io/plot.py`
-**Outcome:** a function that takes `points` + `final` (triangle list) and
-draws them with matplotlib. Just get one plot on screen.
-**Stop when:** you see a triangulated point cloud rendered, even if ugly.
+## Day 3 — Write `io/plot.py` ✅ DONE
+**Outcome:** built as `viz/plot.py` (renamed from the original `io/`
+sketch). Ran it on the 5-point square test case — visualized successfully.
 
 ## Day 4 — Visual sanity pass
 **Outcome:** run `bowyer_watson()` + plot on 10-15 random points. Look for
@@ -132,3 +156,6 @@ gap to anxiously fill in advance.
 - If you're stuck past 45 minutes on a single bug, commit a comment in the
   code describing where you're stuck and stop. Fresh eyes tomorrow are
   worth more than one more hour tonight.
+- GATE prep and this project are not in competition on any given day —
+  but across a week, if tessello is consistently eating into GATE study
+  time, shrink tessello's days, not the reverse.
