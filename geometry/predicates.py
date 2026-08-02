@@ -19,4 +19,9 @@ def in_circumcircle(a,b,c,d):
            + ax2ay2 * (bx * cy - by * cx))
 
     return det > 0
-
+def segmentsIntersect(a,b,c,d):
+    o1 = orientation(a,b,c)
+    o2 = orientation(a,b,d)
+    o3 = orientation(c,d,a)
+    o4 = orientation(c,d,b)
+    return o1!=o2 and o3!=o4
