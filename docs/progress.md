@@ -68,7 +68,7 @@ running record and add dated entries below it from here on.
   together: seed with super-triangle, insert points one at a time
   (find bad → remove → find boundary → fan new triangles), strip
   scaffold-touching triangles at the end.
-- Written, not yet tested end-to-end.
+- Written and tested against random points and structured points.
 
 ## Process / meta
 - Wrote README.md (trimmed — status only, no speculative roadmap).
@@ -89,5 +89,11 @@ running record and add dated entries below it from here on.
 
 ## Add new entries below, dated, as you go:
 
-### [date]
--
+### [2026-08-02]
+## Constrained-Delunay
+- Looked into the concept of inserting boundaries. found resource for the whole pipeline - Lecture Notes on Delaunay Mesh Generation by Jonathan Richard Shewchuk. can be kept for reference.
+- Explored several ways to force a required boundary edge (A-B) to survive triangulation when plain Bowyer-Watson doesn't naturally produce it.
+- Initially assumed the "flip" mechanic (single quadrilateral, swap the diagonal) generalizes directly to the multi-crossing case. It doesn't — worked through a concrete counterexample: a chain of points near but never crossing the straight A-B line (A-C-D-E-F-G-H-B) has no crossing edge to even start flipping from. This matches Shewchuk's formal definition, which uses a visibility condition, not a straight-line-crossing test.
+- Landed on a cleaner, self-consistent model instead: treat the region between the existing mesh and the required edge as a single cavity (same idea as Bowyer-Watson's point-insertion cavity), delete it, and retriangulate the whole thing at once with the required edge forced in. This handles both the simple crossing case and the no-crossing chain case with one unified procedure, since both are just "some cavity shape" — sometimes a simple quadrilateral, sometimes a longer sliver.
+- Known limitation: this is correct but not work-minimal. Shewchuk's actual segment-insertion algorithm (see Lecture Notes on Delaunay Mesh Generation, 2012) does provably minimal work by only touching edges that actually cross the required edge's path. Worth reading properly and comparing once the cavity-based version is implemented and tested.
+- Decision: build the cavity-based version first, behind a swappable interface (insert_constrained_edge(triangles, points, edge)), documented as non-optimal, so a Shewchuk-based replacement can drop in later without touching any calling code.
