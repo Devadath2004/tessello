@@ -133,4 +133,14 @@ def findCrossingEdges(triangles,points,edge):
             if segmentsIntersect(p1,p2,p3,p4):
                 crossing.add(current_edge)
     return crossing
-
+def intersectingTriangles(triangles,intersectingEdges):
+    crossingTriangles=[]
+    for i,j in intersectingEdges:
+        for tri in triangles:
+            if tri in crossingTriangles:
+                continue
+            tri_edges = [(min((tri.a,tri.b)),max(tri.a,tri.b)),(min((tri.b,tri.c)),max(tri.b,tri.c)),(min((tri.a,tri.c)),max(tri.a,tri.c))]
+            if (i,j) in tri_edges:
+                crossingTriangles.append(tri)
+    return crossingTriangles
+            
