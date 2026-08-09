@@ -1,5 +1,5 @@
 from geometry.primitives import Point, Triangle
-from geometry.predicates import orientation, in_circumcircle
+from geometry.predicates import orientation, in_circumcircle, segmentsIntersect
 from viz.plot import plot_triangulation
 def super_triangle(points):
     min_x = min(p.x for p in points)
@@ -116,3 +116,21 @@ def bowyer_watson_live(input_points):
         final.append(tri)
 
     return points, final   
+def findCrossingEdges(triangles,points,edge):
+    """This function is used to determine whether any of the existing triangle edges crosses the given boundary edge. So it begins with taking in the triangle list, point list and the required edge and uses the segmentsInersect to determine all the crossing edges"""
+    i,j = edge
+    p1,p2 = points[i],points[j]
+    crossing = set()
+    for tri in triangles:
+        tri_edges=[(tri.a,tri.b),(tri.b,tri.c),(tri.a,tri.c)]
+        for (u,v) in tri_edges:
+            if u in (i,j) or v in (i,j):
+                continue
+            current_edge = (min(u,v),max(u,v))
+            if current_edge in crossing:
+                continue
+            p3,p4 = points[u],points[v]
+            if segmentsIntersect(p1,p2,p3,p4):
+                crossing.add(current_edge)
+    return crossing
+
