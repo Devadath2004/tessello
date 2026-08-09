@@ -97,3 +97,15 @@ running record and add dated entries below it from here on.
 - Landed on a cleaner, self-consistent model instead: treat the region between the existing mesh and the required edge as a single cavity (same idea as Bowyer-Watson's point-insertion cavity), delete it, and retriangulate the whole thing at once with the required edge forced in. This handles both the simple crossing case and the no-crossing chain case with one unified procedure, since both are just "some cavity shape" — sometimes a simple quadrilateral, sometimes a longer sliver.
 - Known limitation: this is correct but not work-minimal. Shewchuk's actual segment-insertion algorithm (see Lecture Notes on Delaunay Mesh Generation, 2012) does provably minimal work by only touching edges that actually cross the required edge's path. Worth reading properly and comparing once the cavity-based version is implemented and tested.
 - Decision: build the cavity-based version first, behind a swappable interface (insert_constrained_edge(triangles, points, edge)), documented as non-optimal, so a Shewchuk-based replacement can drop in later without touching any calling code.
+### [2026-08-09]
+## Intersecting triangles
+- worked through the algorithm for finding the intersecting triangles and wrote the function for finding it using the segmentsIntesect funciton created earlier
+- worked through finding the algorithm used for re triangulation after forcing the edge
+- Planning to go with ear clipping algorithm to split between the subpolygons after the cavity has been done
+- Next steps after this session - 
+- [] delete intersecting triangles from existing triangle list 
+- [] find the boundary edge using find_boundary_edge function  
+- [] split the boundary using the boundary edge
+- [] use ear clipping to retrianglulate the sub polygons
+- [] push back the new triangle list into the triangles list
+
