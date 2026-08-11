@@ -143,4 +143,7 @@ def intersectingTriangles(triangles,intersectingEdges):
             if (i,j) in tri_edges:
                 crossingTriangles.append(tri)
     return crossingTriangles
-            
+def removeIntersectingTriangles(triangles,crossingTriangles):
+    for tri in crossingTriangles:
+        triangles.remove(tri)
+    return triangles

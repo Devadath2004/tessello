@@ -109,3 +109,13 @@ running record and add dated entries below it from here on.
 - [] use ear clipping to retrianglulate the sub polygons
 - [] push back the new triangle list into the triangles list
 
+### [2026-08-10]
+- wrote a small line of code to remove intersecting triangles from triangles list. Now i need to test it. 
+### [2026-08-11]
+- Tested using claude. It works. i will cross veriy later. for now the first step is done
+- Next steps after this session - 
+- [x] delete intersecting triangles from existing triangle list 
+- [] find the boundary edge using find_boundary_edge function  
+- [] split the boundary using the boundary edge
+- [] use ear clipping to retrianglulate the sub polygons
+- [] push back the new triangle list into the triangles list
