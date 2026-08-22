@@ -119,3 +119,10 @@ running record and add dated entries below it from here on.
 - [] split the boundary using the boundary edge
 - [] use ear clipping to retrianglulate the sub polygons
 - [] push back the new triangle list into the triangles list
+### [2026-08-21]
+- Next steps after this session - 
+- [x] delete intersecting triangles from existing triangle list 
+- [x] find the boundary edge using find_boundary_edge function- step is redundant, just passing the intersectingTriangles to find_boundary_edges function might cut it.
+- [] split the boundary using the boundary edge
+- [] use ear clipping to retrianglulate the sub polygons
+- [] push back the new triangle list into the triangles list
